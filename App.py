@@ -21,9 +21,13 @@ def fetch_standings(force_update=False):
         st.error(f"API isteğinde hata: {e}")
         return None, None
 
-# Kullanıcı seçenekleri
-force = True
-standings, season = fetch_standings(force_update=force)
+# --- Refresh butonu ---
+if st.button("🔄 Yenile"):
+    st.cache_data.clear()     # Önbelleği temizle
+    st.experimental_rerun()   # Sayfayı baştan yükle
+
+# Varsayılan veri çekme
+standings, season = fetch_standings(force_update=True)
 
 if standings is None:
     st.stop()
